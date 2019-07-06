@@ -1,0 +1,11 @@
+
+rmb_SETTING_urlRmb="/home/pi/Downloads/_euts/coding/bash/raspberry_master_bash"
+rmb_SETTING_urlSettingsFile="/home/pi/Downloads/_euts/coding/bash/raspberry_master_bash/_RMB_SETTINGS.txt"
+rmb_SETTING_urlEuts="/home/pi/Downloads/_euts"
+rmb_SETTING_urlDownloads="/home/pi/Downloads"
+rmb_SETTING_fileBrowser="pcmanfm"
+rmb_SETTING_webBrowser="chromium-browser"
+rmb_SETTING_textEditorGeneral="bluefish"
+rmb_SETTING_textEditorImportant="nano"
+rmb_SETTING_pcType="raspberry"
+rmb_SETTING_pcTypeCpu="arm"
