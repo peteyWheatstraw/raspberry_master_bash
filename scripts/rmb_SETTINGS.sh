@@ -1,9 +1,28 @@
 # global declarations
 
+# FILE LOCATION OF SETTINGS FILE
+rmb_SETTING_urlSettingsFile="./_RMB_SETTINGS.txt"
+
+# MAIN SETTINGS
 rmb_SETTING_fileBrowser="pcmanfm"
 rmb_SETTING_webBrowser="chromium-browser"
 rmb_SETTING_textEditorGeneral="bluefish"
 rmb_SETTING_textEditorImportant="nano"
+
+function rmb_SETTINGS_test(){
+	rmb_SETTINGS_readSettingsFile
+}
+
+function rmb_SETTINGS_createSettingsFile(){
+	echo "rmb_SETTINGS_createSettingsFile NOT IMPLEMENTED"
+}
+
+function rmb_SETTINGS_readSettingsFile(){
+	if ! [[ -f "$rmb_SETTING_urlSettingsFile" ]]; then
+		echo "ERROR!!! - RMB SETTINGS FILE NOT FOUND"
+		rmb_SETTINGS_createSettingsFile
+	fi
+}
 
 function rmb_SETTINGS_testPrograms(){
 
