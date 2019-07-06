@@ -30,12 +30,12 @@ function rmb_kfl_createArrays(){
 	local counter=0
 	local index=0
 
-  	while [[ "$counter" -lt "$kfl_amount" ]];do	  	
-  		rmb_kfl_key+=("${kfl[((index))]}")
-  		rmb_kfl_func+=("${kfl[(( index + 1 ))]}")
-  		rmb_kfl_label+=("${kfl[(( index + 2 ))]}")
-  		((counter++))
-  		index=$(( "$counter" * 3 ))
+  while [[ "$counter" -lt "$kfl_amount" ]];do	  	
+		rmb_kfl_key+=("${kfl[((index))]}")
+		rmb_kfl_func+=("${kfl[(( index + 1 ))]}")
+		rmb_kfl_label+=("${kfl[(( index + 2 ))]}")
+		((counter++))
+		index=$(( $counter * 3 ))
 	done		
 	
 	if [[ "$#" -gt 1 ]]; then
