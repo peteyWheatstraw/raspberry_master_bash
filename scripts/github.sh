@@ -116,7 +116,8 @@ function git_addAll_commit_Pull_Push(){
 	git pull origin master
 	git push origin master
 	
-	# cd "$git_SETTING_sentPWD"
+	cd /home/pi
+	#cd "$git_SETTING_sentPWD"
 }
 
 git_init
