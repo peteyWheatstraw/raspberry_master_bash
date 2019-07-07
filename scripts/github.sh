@@ -96,7 +96,9 @@ function git_menu(){
 	
 	git_menu_text(){
 		local git_menu_counter=0
-
+		echo "*********************************"
+		echo "******    GIT MENU **************"
+		echo "*********************************"
 		while [[ "$git_menu_counter" -lt "${#git_menu_key[@]}" ]]; do
 			echo "-${git_menu_key[$git_menu_counter]}---${git_menu_label[$git_menu_counter]}---"
 			((git_menu_counter++))		
