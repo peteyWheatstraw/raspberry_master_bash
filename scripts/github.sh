@@ -1,14 +1,29 @@
+git_SETTING_repos=()
+git_SETTING_repos_folder=()
+git_SETTING_repos_url=()
 
-#git_SETTING_gitFolder="./"
-git_SETTING_gitFolder="/home/pi/Downloads/_euts/coding/bash/raspberry_master_bash/"
+git_SETTING_repos+=("raspberry")
+git_SETTING_repos_folder+=("./")
+git_SETTING_repos_url+=("https://github.com/peteyWheatstraw/raspberry_master_bash.git")
 
-git_SETTING_sentPWD=""
+git_SETTING_repos+=("master_bash")
+git_SETTING_repos_folder+=("../master_bash/" )
+git_SETTING_repos_url+=("https://github.com/peteyWheatstraw/masterbash.git")
 
 
-# git_SETTING_urlRepos=("https://github.com/peteyWheatstraw/raspberry_master_bash.git")
-# git_SETTING_urlRepos+=()
 
-git_set_gitFolder(){
+
+
+##############################
+# USED GLOBAL VARS
+#####################################
+git_sentPWD=""
+git_gitFolder=""
+#################################
+# 
+#################################
+
+git_gitFolder_set(){
 	if [[ "$#" -ne 1 ]]; then
 		echo "ERROR - git-set-gitFolder - incorrect amount of arguments"
 		return
@@ -16,23 +31,29 @@ git_set_gitFolder(){
 	
 	local newFolder="$1"
 	if [[ -d "$newFolder" ]]; then
-		git_check_gitFolder "$newFolder"
-		if [[ "$git_check_gitFolder" -eq 1 ]]; then
-			git_SETTING_gitFolder="$newFolder"
+		git_gitFolder_check "$newFolder"
+		if [[ "$git_gitFolder_check_RETURN" -eq 1 ]]; then
+			git_gitFolder="$newFolder"
+			echo "git_gitFolder SET TO ---$git_gitFolder---"
 		fi
 	else
-		echo "ERROR - git_set_gitFolder - NOT A FOLDER  ---$newFolder"
+		echo "ERROR - git_gitFolder_set - NOT A FOLDER  ---$newFolder"
 	fi
 }
 
+git_test(){
+	echo "TEST"
+	echo "PWD IS ---$PWD"
+	echo "now changing directories"
+	cd /home/pi/Downloads/_euts/coding/bash/
+	echo "PWD NOW IS ---$PWD"
+}
+
 git_init(){
-	git_SETTING_sentPWD="$PWD"	
-	echo "git sent pwd is $git_SETTING_sentPWD"
+	git_sentPWD="$PWD"	
+	echo "git sent pwd is $git_sentPWD"
 	
-	# git_addAll_commit_Pull_Push
-	git_menu
-	# git_check_gitFolder "$git_SETTING_gitFolder"
-	
+	git_menu	
 }
 
 
@@ -41,21 +62,36 @@ function git_menu(){
 	declare -a git_menu_label=()
 	declare -a git_menu_func=()
 	
-	git_menu_key+=("ur")
-	git_menu_label+=("upload Raspberry Master Bash")
-	git_menu_func+=("git_addAll_commit_Pull_Push")	
+	local repo=""
+	local count=0
+	
+	for repo in "${git_SETTING_repos[@]}"; do
+		git_menu_key+=("u$count")
+		git_menu_label+=("upload_$repo")
+		git_menu_func+=("git_gitFolder_set \"${git_SETTING_repos_folder[$count]}\"; git_gitFolder_upload; echo \"after\" ")			
+		
+	#
+	((count++))
+	done
 
 	git_menu_key+=("q")
 	git_menu_label+=("quit")
 	git_menu_func+=("echo 'quitting'; git_menu_exitLoop=1")	
 
+	git_menu_key+=("t")
+	git_menu_label+=("test")
+	git_menu_func+=("git_test")	
+
+	# git_menu_key+=()
+	# git_menu_label+=()
+	# git_menu_func+=()	
 	
 	
 	git_menu_text(){
 		local git_menu_counter=0
 
 		while [[ "$git_menu_counter" -lt "${#git_menu_key[@]}" ]]; do
-			echo "-${git_menu_key[$git_menu_counter]}---${git_menu_label[$textCounter]}---"
+			echo "-${git_menu_key[$git_menu_counter]}---${git_menu_label[$git_menu_counter]}---"
 			((git_menu_counter++))		
 		done		
 	}
@@ -76,35 +112,37 @@ function git_menu(){
 	done
 }
 
-git_check_gitFolder_RETURN=0
-function git_check_gitFolder(){
-	git_check_gitFolder_RETURN=0
+git_gitFolder_check_RETURN=0
+function git_gitFolder_check(){
+	git_gitFolder_check_RETURN=0
 	if [[ "$#" -lt 1 ]]; then
-		echo "ERROR git_check_gitFolder"
+		echo "ERROR git_gitFolder_check"
 		return
 	else
 		local gitFolder="$1"
 	fi	
 	if [[ -d "$gitFolder/.git" ]]; then
-		echo "TIS A GIT FOLDER"
-		git_check_gitFolder_RETURN=1
-	else
-		echo "NOT A GIT FOLDER"
+	#	echo "TIS A GIT FOLDER"
+		git_gitFolder_check_RETURN=1
+	else 
+		echo "NOT a git folder"
 	fi
 }
 
-function git_addAll_commit_Pull_Push(){
+function git_gitFolder_upload(){
 
-	git_check_gitFolder "$git_SETTING_gitFolder"
-	if [[ "$git_check_gitFolder_RETURN" -ne 1 ]]; then
-		echo "ERROR - git_addAll_commit_pull_push -NOT A GIT FOLDER ---$git_SETTING_gitFolder"
+	git_gitFolder_check "$git_gitFolder"
+	if [[ "$git_gitFolder_check_RETURN" -ne 1 ]]; then
+		echo "ERROR - git_gitFolder_upload -NOT A GIT FOLDER ---$git_gitFolder"
+		return
 	fi	
 	
-	if [[ "$git_SETTING_sentPWD" == "" ]]; then
-		echo "ERROR - git_addAll_commit_pull_push - sent PWD not set"
+	if [[ "$git_sentPWD" == "" ]]; then
+		echo "ERROR - git_gitFolder_upload - sent PWD not set"
+		return
 	fi
 	
-	cd "$git_SETTING_gitFOlder"
+	cd "$git_gitFolder"
 	git add -A
 
 
@@ -116,8 +154,8 @@ function git_addAll_commit_Pull_Push(){
 	git pull origin master
 	git push origin master
 	
-	cd /home/pi
-	#cd "$git_SETTING_sentPWD"
+
+	cd "$git_sentPWD"
 }
 
 git_init
