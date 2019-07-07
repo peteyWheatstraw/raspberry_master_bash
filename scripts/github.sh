@@ -42,11 +42,18 @@ git_gitFolder_set(){
 }
 
 git_test(){
-	echo "TEST"
-	echo "PWD IS ---$PWD"
-	echo "now changing directories"
-	cd /home/pi/Downloads/_euts/coding/bash/
-	echo "PWD NOW IS ---$PWD"
+
+	ls | grep whatever
+	if [[ "$?" == 0 ]]; then
+		echo "whatever match"
+	else
+		echo "no match"
+	fi
+#	echo "TEST"
+#	echo "PWD IS ---$PWD"
+#	echo "now changing directories"
+#	cd /home/pi/Downloads/_euts/coding/bash/
+#	echo "PWD NOW IS ---$PWD"
 }
 
 git_init(){
@@ -143,18 +150,27 @@ function git_gitFolder_upload(){
 	fi
 	
 	cd "$git_gitFolder"
+	
+	
 	git add -A
-
-
 	local commitMessage=""
 	echo "TYPE COMMIT MESSAGE NOW"
 	read commitMessage
 	git commit -m "$commitMessage"
 
-	git pull origin master
-	git push origin master
-	
-
+	local trialExit=0
+	#while [[ "$trialExit" 
+	echo "attempting to pull master"
+	git pull origin master | grep "fatal"
+	if [[ "$?" == 0 ]]; then
+		echo "ERROR - fatal error pulling git"
+	else	
+		echo "attempting to push master"
+		git push origin master | grep "fatal"
+		if [[ "$?" == 0 ]];then
+			echo "ERROR - fatal error pushing git"
+		fi
+	fi
 	cd "$git_sentPWD"
 }
 
