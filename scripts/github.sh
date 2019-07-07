@@ -29,14 +29,51 @@ git_init(){
 	git_SETTING_sentPWD="$PWD"	
 	echo "git sent pwd is $git_SETTING_sentPWD"
 	
-	git_addAll_commit_Pull_Push
+	# git_addAll_commit_Pull_Push
+	git_menu
 	# git_check_gitFolder "$git_SETTING_gitFolder"
 	
 }
 
 
 function git_menu(){
-	echo "MENU"
+	declare -a git_menu_key=()
+	declare -a git_menu_label=()
+	declare -a git_menu_func=()
+	
+	git_menu_key+=("ur")
+	git_menu_label+=("upload Raspberry Master Bash")
+	git_menu_func+=("git_addAll_commit_Pull_Push")	
+
+	git_menu_key+=("q")
+	git_menu_label+=("quit")
+	git_menu_func+=("echo 'quitting'; git_menu_exitLoop=1")	
+
+	
+	
+	git_menu_text(){
+		local git_menu_counter=0
+
+		while [[ "$git_menu_counter" -lt "${#git_menu_key[@]}" ]]; do
+			echo "-${git_menu_key[$git_menu_counter]}---${git_menu_label[$textCounter]}---"
+			((git_menu_counter++))		
+		done		
+	}
+	
+	local git_menu_exitLoop=0
+	local git_menu_input=""
+	while [[ "$git_menu_exitLoop" -eq 0 ]]; do
+		git_menu_text
+		read git_menu_input
+		echo "------------------------------------------------------"
+		rmb_kfl_findKey "$git_menu_input"  git_menu_key
+		if [[ "$rmb_kfl_findKey_RETURN" -ne -1 ]]; then
+			eval "${git_menu_func[$rmb_kfl_findKey_RETURN]}"
+		else
+			echo "UNKNOWN COMMAND"
+		fi
+	
+	done
 }
 
 git_check_gitFolder_RETURN=0
@@ -79,7 +116,7 @@ function git_addAll_commit_Pull_Push(){
 	git pull origin master
 	git push origin master
 	
-	cd "$git_SETTING_sentPWD"
+	# cd "$git_SETTING_sentPWD"
 }
 
 git_init
