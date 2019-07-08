@@ -50,7 +50,6 @@ function rmb_kfl_createArrays(){
 			sentFuncArray["$counter"]="${rmb_kfl_func[$counter]}"
 			sentLabelArray["$counter"]="${rmb_kfl_label[$counter]}"
 
-#			echo "key func label ---${sentKeyArray[$counter]}---${sentFuncArray[$counter]}---${sentLabelArray[$counter]}---"
 			((counter++))
 		done
 	fi
