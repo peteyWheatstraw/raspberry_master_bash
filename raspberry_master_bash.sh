@@ -60,22 +60,24 @@ function rmb_kfl_createArrays(){
 
 rmb_kfl_findKey_RETURN=-1
 function rmb_kfl_findKey(){
-	  	rmb_kfl_findKey_RETURN=-1
-	  	local sentKey="$1"
-	  	declare -n keyArray="$2"
-
-	  	local counter=0
-	  	while [[ "$counter" -lt "${#keyArray[@]}" ]];do
-	   	if [[ "${keyArray[counter]}" == "$sentKey" ]]; then
-	   		if [[ "$rmb_kfl_findKey_RETURN" -eq -1 ]]; then
-	   			rmb_kfl_findKey_RETURN="$counter"	
-	   		else
-	   			echo "ERROR - rmb_loadkey ---- two matching keys found"
-	   			return
-	   		fi
-	   	fi
-	   	((counter++))
-	  done
+  	rmb_kfl_findKey_RETURN=-1
+  	local sentKey="$1"
+  	declare -n keyArray="$2"
+	
+	#echo "rmb_kfl_findKey_RETURN is $rmb_kfl_findKey_RETURN"
+  	local counter=0
+  	while [[ "$counter" -lt "${#keyArray[@]}" ]];do
+   	if [[ "${keyArray[counter]}" == "$sentKey" ]]; then
+   		if [[ "$rmb_kfl_findKey_RETURN" -eq -1 ]]; then
+   			rmb_kfl_findKey_RETURN="$counter"	
+   		else
+   			echo "ERROR - rmb_loadkey ---- two matching keys found"	
+     			return
+   		fi
+   	fi
+	   ((counter++))
+	 done
+	# echo "AT END rmb_kfl_findKey_RETURN is $rmb_kfl_findKey_RETURN"
 }
 
 rmb_menu_main_INIT=0

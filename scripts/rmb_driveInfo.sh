@@ -10,8 +10,8 @@ function rmb_driveInfo(){
 
 
 
-rmb_driveInfo_knownMachineIDs=("f9a1a119b09f426e9a1134d64cad9df8")
-rmb_driveInfo_knownMachineIDs_names=("c302")
+rmb_driveInfo_knownMachineIDs=("f9a1a119b09f426e9a1134d64cad9df8" "afa461b3d2e44713a37cea92d3908b4f")
+rmb_driveInfo_knownMachineIDs_names=("c302" "rp3bp")
 
 rmb_driveInfo_findMachineID_RETURN_foundMachineID=""
 rmb_driveInfo_findMachineID_RETURN_foundMachineID_name=""
@@ -27,9 +27,11 @@ function rmb_driveInfo_findMachineID(){
   rmb_driveInfo_findMachineID_RETURN_foundMachineID="$found_machineID"
 
   rmb_kfl_findKey "$found_machineID" rmb_driveInfo_knownMachineIDs
-  if [[ "$rmb_kfl_findkey_RETURN" -ne -1 ]]; then
-    echo "FOUND SHIT"
-    rmb_driveInfo_findMachineID_RETURN_foundMachineID_name="${rmb_driveInfo_knownMachineIDs_names[$rmb_kfl_findkey_RETURN]}"
+#  echo "SEARCHING ---$rmb_kfl_findkey_RETURN"
+  if [[ "$rmb_kfl_findKey_RETURN" -ne -1 ]]; then
+#    echo "FOUND SHIT YO ---$rmb_kfl_findkey_RETURN"
+    rmb_driveInfo_findMachineID_RETURN_foundMachineID_name="${rmb_driveInfo_knownMachineIDs_names[$rmb_kfl_findKey_RETURN]}"
+#    echo "name is $rmb_driveInfo_findMachineID_RETURN_foundMachineID_name"
   fi
 
   echo "rmb_driveInfo_findMachineID_RETURN_foundMachineID is  ---$rmb_driveInfo_findMachineID_RETURN_foundMachineID"
@@ -40,8 +42,8 @@ function rmb_driveInfo_findMachineID(){
 
 
 
-rmb_driveInfo_knownDrives_serials=("0xb093b77a")
-rmb_driveInfo_knownDrives_names=("c302")
+rmb_driveInfo_knownDrives_serials=("0xb093b77a" "0xe05b618e")
+rmb_driveInfo_knownDrives_names=("c302" "rp3bp")
 
 rmb_driveInfo_findMainDrive_RETURN_foundDrives=()
 rmb_driveInfo_findMainDrive_RETURN_foundDrives_serials=()
