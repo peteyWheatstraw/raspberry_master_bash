@@ -63,6 +63,26 @@ git_init(){
 	git_menu	
 }
 
+function git_gitFolder_download(){
+	git_gitFolder_check "$git_gitFolder"
+	if [[ "$git_gitFolder_check_RETURN" -ne 1 ]]; then
+		echo "ERROR - git_gitFolder_upload -NOT A GIT FOLDER ---$git_gitFolder"
+		return
+	fi	
+	
+	if [[ "$git_sentPWD" == "" ]]; then
+		echo "ERROR - git_gitFolder_upload - sent PWD not set"
+		return
+	fi
+	
+	cd "$git_gitFolder"
+	echo "attempting to pull master"
+	git pull origin master | grep "fatal"
+	if [[ "$?" == 0 ]]; then
+		echo "ERROR - fatal error pulling git"
+	fi
+	cd "$git_sentPWD"
+}
 
 function git_menu(){
 	declare -a git_menu_key=()
@@ -76,6 +96,10 @@ function git_menu(){
 		git_menu_key+=("u$count")
 		git_menu_label+=("upload_$repo")
 		git_menu_func+=("git_gitFolder_set \"${git_SETTING_repos_folder[$count]}\"; git_gitFolder_upload; echo \"after\" ")			
+		
+		git_menu_key+=("d$count")
+		git_menu_label+=("download_$repo")
+		git_menu_func+=("git_gitFolder_set \"${git_SETTING_repos_folder[$count]}\"; git_gitFolder_download; echo \"after\" ")			
 		
 	#
 	((count++))
@@ -137,6 +161,7 @@ function git_gitFolder_check(){
 		echo "NOT a git folder"
 	fi
 }
+
 
 function git_gitFolder_upload(){
 
