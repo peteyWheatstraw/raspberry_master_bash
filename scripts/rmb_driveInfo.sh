@@ -27,11 +27,11 @@ function rmb_driveInfo_findMachineID(){
   rmb_driveInfo_findMachineID_RETURN_foundMachineID="$found_machineID"
 
   rmb_kfl_findKey "$found_machineID" rmb_driveInfo_knownMachineIDs
-#  echo "SEARCHING ---$rmb_kfl_findkey_RETURN"
+  #  echo "SEARCHING ---$rmb_kfl_findkey_RETURN"
   if [[ "$rmb_kfl_findKey_RETURN" -ne -1 ]]; then
-#    echo "FOUND SHIT YO ---$rmb_kfl_findkey_RETURN"
+  #    echo "FOUND SHIT YO ---$rmb_kfl_findkey_RETURN"
     rmb_driveInfo_findMachineID_RETURN_foundMachineID_name="${rmb_driveInfo_knownMachineIDs_names[$rmb_kfl_findKey_RETURN]}"
-#    echo "name is $rmb_driveInfo_findMachineID_RETURN_foundMachineID_name"
+  #    echo "name is $rmb_driveInfo_findMachineID_RETURN_foundMachineID_name"
   fi
 
   echo "rmb_driveInfo_findMachineID_RETURN_foundMachineID is  ---$rmb_driveInfo_findMachineID_RETURN_foundMachineID"
@@ -60,7 +60,7 @@ function rmb_driveInfo_findMainDrive(){
   for searchName in "${namesToSearchFor[@]}"; do
     lsblk -d | grep -q "$searchName"
     if [[ "$?" == 0 ]]; then
-#      echo "FOUND DRIVE MATCH --- $searchName"
+  #      echo "FOUND DRIVE MATCH --- $searchName"
       rmb_driveInfo_findMainDrive_RETURN_foundDrives+=("$searchName")
     fi
   done
@@ -69,13 +69,13 @@ function rmb_driveInfo_findMainDrive(){
   local dummy=""
   local serialFound=""
   for dummy in "${rmb_driveInfo_findMainDrive_RETURN_foundDrives[@]}"; do
-#    echo "SERIAL FOUNDS"
+  #    echo "SERIAL FOUNDS"
     udevadm info --query=all --name=/dev/mmcblk0 | grep ID_SERIAL
     if [[ "$?" == 0 ]]; then
       serialFound=$(udevadm info --query=all --name=/dev/mmcblk0 | grep ID_SERIAL)
-#      echo "first serialFound is $serialFound"
+  #      echo "first serialFound is $serialFound"
       serialFound=${serialFound#*ID_SERIAL=}
-#      echo "second serialFound is $serialFound"
+        echo "second serialFound is $serialFound"
       rmb_driveInfo_findMainDrive_RETURN_foundDrives_serials+=("$serialFound")
     fi
   done
@@ -100,4 +100,4 @@ function rmb_driveInfo_findMainDrive(){
 }
 
 #rmb_driveInfo_findMainDrive
-rmb_driveInfo_findMachineID
+#rmb_driveInfo_findMachineID

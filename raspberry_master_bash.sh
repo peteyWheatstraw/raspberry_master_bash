@@ -2,8 +2,20 @@
 
 
 
-rmb_SETTING_scriptFolder="./scripts"
+rmb_SETTING_varNames=()
 
+
+rmb_SETTING_initPWD=""
+rmb_SETTING_varNames+=("initPWD")
+
+rmb_SETTING_scriptFolder="./scripts"
+rmb_SETTING_varNames+=("scriptFolder")
+
+rmb_SETTING_scriptsToAutoLoad=("./scripts/rmb_SETTING_2.sh" "./scripts/rmb_coreFncs.sh")
+
+rmb_SETTING_varNames+=("scriptsToAutoLoad")
+
+# rmb_SETTING_scriptsToAutoLoad=("./scripts/test.sh")
 
 rmb_exitSwitch=0
 
@@ -124,9 +136,9 @@ function rmb_menu_main(){
 	done
 }
 
-rmb_loadScript(){
+function rmb_loadScript(){
 	local scriptToLoad="$1"
-
+	echo "LOADING -----$scriptToLoad"
 	if [ -f "$scriptToLoad" ]; then
 		source "$scriptToLoad"	
 	else
@@ -143,6 +155,17 @@ function rmb_test(){
 }
 
 function rmb_init(){
+	
+	rmb_SETTING_initPWD="$PWD"
+
+	#echo "HI"
+	if [[ "${#rmb_SETTING_scriptsToAutoLoad[@]}" -gt 0 ]]; then
+		local scriptToLoad=""
+		#echo "AUTOLOAD"
+		for scriptToLoad in "${rmb_SETTING_scriptsToAutoLoad[@]}"; do
+			rmb_loadScript "$scriptToLoad"
+		done
+	fi
 	rmb_menu_main
 }
 

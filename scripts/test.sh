@@ -1,0 +1,1 @@
+echo "rmb scripts test file"

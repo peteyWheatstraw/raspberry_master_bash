@@ -4,32 +4,54 @@ rmb_SETTING_varNames=()
 
 #LOCATIONS
 
-function rmb_SETTINGS_setVarsRaspDefault(){
+function rmb_SETTING_defaultVars_rp3bp(){
 
-	rmb_SETTING_urlRmb="/home/pi/Downloads/_euts/coding/bash/raspberry_master_bash"
-	rmb_SETTING_urlSettingsFile="$rmb_SETTING_urlRmb/_RMB_SETTINGS.txt"
+
+  # URLS
 	rmb_SETTING_urlEuts="/home/pi/Downloads/_euts"
 	rmb_SETTING_urlDownloads="/home/pi/Downloads"
+	rmb_SETTING_urlRmb="/home/pi/Downloads/_euts/coding/bash/raspberry_master_bash"
+  #	rmb_SETTING_urlSETTINGFile="$rmb_SETTING_urlRmb/_RMB_SETTING.txt"
 
+  # PROGRAMS
 	rmb_SETTING_webBrowser="chromium-browser"
 	rmb_SETTING_fileBrowser="pcmanfm"
 	rmb_SETTING_textEditorGeneral="bluefish"
 	rmb_SETTING_textEditorImportant="nano"
 
-	rmb_SETTING_pcType="raspberry"
-	rmb_SETTING_pcTypeCpu="arm"
-	
+  # COMPUTER DATA
+	rmb_SETTING_operatingSystem="raspbian"
+	rmb_SETTING_cpuArchitecture="arm"
+  rmb_SETTING_hardDriveSerial="0xe05b618e"
 }
 
+function rmb_SETTING_defaultVars_c302(){
 
+  # URLS
+  rmb_SETTING_urlEuts="/home/petey/Downloads/_euts"
+  rmb_SETTING_urlDownloads="/home/petey/Downloads"
+  rmb_SETTING_urlRmb="/home/petey/Downloads/_euts/_coding/bash/raspberry_master_bash"
+  #  rmb_SETTING_urlSETTINGFile="$rmb_SETTING_urlRmb/_RMB_SETTING.txt"
+
+  # PROGRAMS
+  rmb_SETTING_webBrowser="firefox"
+  rmb_SETTING_fileBrowser="nautilus"
+  rmb_SETTING_textEditorGeneral="subl"
+  rmb_SETTING_textEditorImportant="nano"
+
+  # COMPUTER DATA
+  rmb_SETTING_operatingSystem="ubuntu"
+  rmb_SETTING_cpuArchitecture="x86"
+  rmb_SETTING_hardDriveSerial="0xb093b77a"
+}
 
 # URLS
 
 rmb_SETTING_urlRmb=""
 rmb_SETTING_varNames+=("rmb_SETTING_urlRmb")
 
-rmb_SETTING_urlSettingsFile=""
-rmb_SETTING_varNames+=("rmb_SETTING_urlSettingsFile")
+rmb_SETTING_urlSETTINGFile=""
+rmb_SETTING_varNames+=("rmb_SETTING_urlSETTINGFile")
 
 rmb_SETTING_urlEuts=""
 rmb_SETTING_varNames+=("rmb_SETTING_urlEuts")
@@ -38,7 +60,7 @@ rmb_SETTING_urlDownloads=""
 rmb_SETTING_varNames+=("rmb_SETTING_urlDownloads")
 
 
-# MAIN SETTINGS
+# MAIN SETTING
 	#PROGRAMS
 rmb_SETTING_fileBrowser=""
 rmb_SETTING_fileBrowser_opts=("pcmanfm" "nautilus")
@@ -175,50 +197,50 @@ function file_saveState(){
 
 
 
-function rmb_SETTINGS_test(){
-	rmb_SETTINGS_readSettingsFile
+function rmb_SETTING_test(){
+	rmb_SETTING_readSETTINGFile
 }
 
-function rmb_SETTINGS_createSettingsFile(){
+function rmb_SETTING_createSETTINGFile(){
 		declare -a blankArrayOne=()
 		declare -a blankArrayTwo=()
 		
-		file_saveState "$rmb_SETTING_urlSettingsFile" rmb_SETTING_varNames blankArrayOne blankArrayTwo 
+		file_saveState "$rmb_SETTING_urlSETTINGFile" rmb_SETTING_varNames blankArrayOne blankArrayTwo 
 }
 
-function rmb_SETTINGS_init(){
-	rmb_SETTINGS_test
+function rmb_SETTING_init(){
+	rmb_SETTING_test
 }
 
-function rmb_SETTINGS_displaySettings(){
+function rmb_SETTING_displaySETTING(){
    local whatever=""
    for whatever in "${rmb_SETTING_varNames[@]}"; do
    	echo "$whatever = ${!whatever}"
    done
 }
 
-function rmb_SETTINGS_readSettingsFile(){
-	if ! [[ -f "$rmb_SETTING_urlSettingsFile" ]]; then
-		rmb_SETTINGS_setVarsRaspDefault
-		rmb_SETTINGS_createSettingsFile	
+function rmb_SETTING_readSETTINGFile(){
+	if ! [[ -f "$rmb_SETTING_urlSETTINGFile" ]]; then
+		rmb_SETTING_defaultVars_rp3bp
+		rmb_SETTING_createSETTINGFile	
 	fi
 	
-   file_loadState "$rmb_SETTING_urlSettingsFile"
-	rmb_SETTINGS_displaySettings
+   file_loadState "$rmb_SETTING_urlSETTINGFile"
+	rmb_SETTING_displaySETTING
 }
 
-function rmb_SETTINGS_testPrograms(){
+function rmb_SETTING_testPrograms(){
 
 	# TESTING THE CALLS OF PROGRAMS
 	#"$rmb_SETTING_fileBrowser" # calls and returns
 	"$rmb_SETTING_webBrowser" # calls but waits for close
 }
 
-function rmb_SETTINGS_testIfProgInstalled(){
+function rmb_SETTING_testIfProgInstalled(){
 
 	which "$rmb_SETTING_textEditorImportant"
 	# if this returns something - then its installed
 	# -NOT FINISHED
 }
 
-rmb_SETTINGS_init
+rmb_SETTING_init
