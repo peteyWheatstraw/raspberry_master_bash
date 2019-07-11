@@ -1,9 +1,23 @@
-
 rmb_bashLog_logFolder="./scripts/bashLogs/"
-
-
-
 rmb_bashLog_logFile=""
+
+
+function rmb_bashLog_recordInputAndOutPutToFile(){
+	local fileToSave="$1"
+	local commandToRun="$2"
+
+
+	# INSERT FILE CHECK SHIT HERE
+
+	#RUN AND RECORD THAT SHIT YO
+	commandToRun="$commandToRun | tee -a $fileToSave"
+	eval "$commandToRun"
+}
+
+
+
+
+
 
 function rmb_bashLog(){
 	local logName=""
@@ -158,7 +172,7 @@ function rmb_bashLog_loadKeyFunc(){
   	local foundIndex=-1
   	# echo "keyToFind is $keyToFind"
  
-  	while [[ "$counter" -lt "${#keyArray[@]}" ]];do
+  while [[ "$counter" -lt "${#keyArray[@]}" ]];do
 
 	#	echo "keyArray[counter] is ${keyArray[counter]}"
    	if [[ "${keyArray[$counter]}" == "$keyToFind" ]]; then
@@ -172,6 +186,7 @@ function rmb_bashLog_loadKeyFunc(){
    	fi
    	((counter++))
   done
+  
  # echo "foundIndex is $foundIndex"
   if [[ "$foundIndex" -ne -1 ]]; then
   	  eval "${funcArray[$foundIndex]}"

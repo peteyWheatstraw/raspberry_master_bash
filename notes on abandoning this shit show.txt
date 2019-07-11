@@ -1,0 +1,19 @@
+NOTES ON RASPBERRY MASTER BASH
+
+merge rmb into the mb folder
+
+absorb all the good shit from rmb into mb
+
+confirm that the shit in mb is working
+
+
+THINGS TO CARRY OVER FROM RMB TO MB
+
+create a core of info functions
+
+info_drive
+
+info_machineId_find
+info_drive_
+info_printenv
+

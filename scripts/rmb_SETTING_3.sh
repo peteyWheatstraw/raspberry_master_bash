@@ -36,7 +36,7 @@ rmb_SETTING_webBrowser_opts=("chromium-browser" "firefox")
 rmb_SETTING_varNames+=("rmb_SETTING_webBrowser")
 
 rmb_SETTING_textEditorGeneral=""
-rmb_SETTING_textEditorGeneral_opts=("bluefish" "subl")
+rmb_SETTING_textEditorGeneral_opts=("bluefish" "subl" "geany")
 rmb_SETTING_varNames+=("rmb_SETTING_textEditorGeneral")
 
 rmb_SETTING_textEditorImportant=""
